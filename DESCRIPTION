@@ -1,0 +1,19 @@
+Package: TxDb.Cfamiliaris.UCSC.canFam3.ncbiRefSeq
+Title: Annotation package for TxDb object(s)
+Description: Exposes an annotation databases generated from UCSC by exposing these as TxDb objects.
+Version: 1.0.0
+Authors@R: 
+    c(person(given = "Stephen",
+             family = "Turner",
+             email = "turner@colossal.com",
+             role = c("aut", "cre"),
+             comment = c(ORCID = "0000-0001-9140-9028"))) 
+Depends: GenomicFeatures (>= 1.50.4)
+Imports: AnnotationDbi
+License: Artistic-2.0
+organism: Canis familiaris
+species: Canis familiaris
+provider: UCSC
+provider_version: canFam3 genome based on the ncbiRefSeq table
+resource_url: http://genome.ucsc.edu/
+biocViews: AnnotationData, Genetics, TxDb, Canis_familiaris
