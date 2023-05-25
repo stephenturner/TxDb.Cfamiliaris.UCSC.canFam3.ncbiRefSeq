@@ -8,42 +8,29 @@ lupis familiaris* canFam3, created from the ncbiRefSeq table of the
 [UCSC genome
 browser](https://genome.ucsc.edu/cgi-bin/hgGateway?db=canFam3).
 
+## Installation
+
+``` r
+# install.packages("BiocManager")
+BiocManager::install("https://github.com/stephenturner/TxDb.Cfamiliaris.UCSC.canFam3.ncbiRefSeq", update=FALSE)
+#> 'getOption("repos")' replaces Bioconductor standard repositories, see
+#> 'help("repositories", package = "BiocManager")' for details.
+#> Replacement repositories:
+#>     CRAN: https://cloud.r-project.org/
+#> Bioconductor version 3.16 (BiocManager 1.30.20), R 4.2.3 (2023-03-15)
+#> Installing package(s)
+#>   'https://github.com/stephenturner/TxDb.Cfamiliaris.UCSC.canFam3.ncbiRefSeq'
+#> Warning: package 'https://github.com/stephenturner/TxDb.Cfamiliaris.UCSC.canFam3.ncbiRefSeq' is not available for Bioconductor version '3.16'
+#> 
+#> A version of this package for your version of R might be available elsewhere,
+#> see the ideas at
+#> https://cran.r-project.org/doc/manuals/r-patched/R-admin.html#Installing-packages
+```
+
 ## Usage
 
 ``` r
-library(GenomicFeatures)
-#> Loading required package: BiocGenerics
-#> 
-#> Attaching package: 'BiocGenerics'
-#> The following objects are masked from 'package:stats':
-#> 
-#>     IQR, mad, sd, var, xtabs
-#> The following objects are masked from 'package:base':
-#> 
-#>     anyDuplicated, aperm, append, as.data.frame, basename, cbind,
-#>     colnames, dirname, do.call, duplicated, eval, evalq, Filter, Find,
-#>     get, grep, grepl, intersect, is.unsorted, lapply, Map, mapply,
-#>     match, mget, order, paste, pmax, pmax.int, pmin, pmin.int,
-#>     Position, rank, rbind, Reduce, rownames, sapply, setdiff, sort,
-#>     table, tapply, union, unique, unsplit, which.max, which.min
-#> Loading required package: S4Vectors
-#> Loading required package: stats4
-#> 
-#> Attaching package: 'S4Vectors'
-#> The following objects are masked from 'package:base':
-#> 
-#>     expand.grid, I, unname
-#> Loading required package: IRanges
-#> Loading required package: GenomeInfoDb
-#> Loading required package: GenomicRanges
-#> Loading required package: AnnotationDbi
-#> Loading required package: Biobase
-#> Welcome to Bioconductor
-#> 
-#>     Vignettes contain introductory material; view with
-#>     'browseVignettes()'. To cite Bioconductor, see
-#>     'citation("Biobase")', and for packages 'citation("pkgname")'.
-library(TxDb.Cfamiliaris.UCSC.canFam3.ncbiRefSeq)
+suppressPackageStartupMessages(library(TxDb.Cfamiliaris.UCSC.canFam3.ncbiRefSeq))
 tx <- TxDb.Cfamiliaris.UCSC.canFam3.ncbiRefSeq
 columns(tx)
 #>  [1] "CDSCHROM"   "CDSEND"     "CDSID"      "CDSNAME"    "CDSPHASE"  
@@ -147,17 +134,18 @@ cds(tx)
 
 ``` r
 library(GenomicFeatures)
-download.file("http://hgdownload.soe.ucsc.edu/goldenPath/canFam3/bigZips/genes/canFam3.ncbiRefSeq.gtf.gz", destfile="/tmp/canFam3.ncbiRefSeq.gtf.gz")
+myurl <- "http://hgdownload.soe.ucsc.edu/goldenPath/canFam3/bigZips/genes/canFam3.ncbiRefSeq.gtf.gz"
+download.file(myurl, destfile="/tmp/canFam3.ncbiRefSeq.gtf.gz")
 txdb <- makeTxDbFromGFF(file="/tmp/canFam3.ncbiRefSeq.gtf.gz",
                         dataSource="UCSC Genome Browser",
                         organism="Canis lupis familiaris", 
-                        metadata = data.frame(name="Resource URL", value="http://hgdownload.soe.ucsc.edu/goldenPath/canFam3/bigZips/genes/canFam3.ncbiRefSeq.gtf.gz"),
+                        metadata = data.frame(name="Resource URL", value=myurl),
                         taxonomyId = 9615)
 makeTxDbPackage(txdb, 
                 version="1.0.0",
                 author="Stephen Turner <no-reply@accounts.google.com>",
                 maintainer="Stephen Turner <no-reply@accounts.google.com>",
-                destDir=".", 
+                destDir="/tmp", 
                 pkgname="TxDb.Cfamiliaris.UCSC.canFam3.ncbiRefSeq", 
                 provider="UCSC Genome Browser", 
                 providerVersion="canFam3")

@@ -17,11 +17,18 @@ knitr::opts_chunk$set(
 
 TxDb package (from GenomicFeatures) for the dog reference genome _Canis lupis familiaris_ canFam3, created from the ncbiRefSeq table of the [UCSC genome browser](https://genome.ucsc.edu/cgi-bin/hgGateway?db=canFam3).
 
+## Installation
+
+```{r}
+# install.packages("BiocManager")
+BiocManager::install("https://github.com/stephenturner/TxDb.Cfamiliaris.UCSC.canFam3.ncbiRefSeq", update=FALSE)
+```
+
+
 ## Usage
 
 ```{r}
-library(GenomicFeatures)
-library(TxDb.Cfamiliaris.UCSC.canFam3.ncbiRefSeq)
+suppressPackageStartupMessages(library(TxDb.Cfamiliaris.UCSC.canFam3.ncbiRefSeq))
 tx <- TxDb.Cfamiliaris.UCSC.canFam3.ncbiRefSeq
 columns(tx)
 genes(tx)
@@ -36,17 +43,18 @@ cds(tx)
 
 ```{r, eval=FALSE}
 library(GenomicFeatures)
-download.file("http://hgdownload.soe.ucsc.edu/goldenPath/canFam3/bigZips/genes/canFam3.ncbiRefSeq.gtf.gz", destfile="/tmp/canFam3.ncbiRefSeq.gtf.gz")
+myurl <- "http://hgdownload.soe.ucsc.edu/goldenPath/canFam3/bigZips/genes/canFam3.ncbiRefSeq.gtf.gz"
+download.file(myurl, destfile="/tmp/canFam3.ncbiRefSeq.gtf.gz")
 txdb <- makeTxDbFromGFF(file="/tmp/canFam3.ncbiRefSeq.gtf.gz",
                         dataSource="UCSC Genome Browser",
                         organism="Canis lupis familiaris", 
-                        metadata = data.frame(name="Resource URL", value="http://hgdownload.soe.ucsc.edu/goldenPath/canFam3/bigZips/genes/canFam3.ncbiRefSeq.gtf.gz"),
+                        metadata = data.frame(name="Resource URL", value=myurl),
                         taxonomyId = 9615)
 makeTxDbPackage(txdb, 
                 version="1.0.0",
                 author="Stephen Turner <no-reply@accounts.google.com>",
                 maintainer="Stephen Turner <no-reply@accounts.google.com>",
-                destDir=".", 
+                destDir="/tmp", 
                 pkgname="TxDb.Cfamiliaris.UCSC.canFam3.ncbiRefSeq", 
                 provider="UCSC Genome Browser", 
                 providerVersion="canFam3")
